@@ -1,7 +1,7 @@
 import flask
 from flask import request
 
-buttons = {str(num): False for num in range(9)}
+buttons = {('buttonId' + str(num)): False for num in range(4)}
 
 # Amazon Elastic Beanstalk looks for an 'application' callable by default.
 application = flask.Flask(__name__)

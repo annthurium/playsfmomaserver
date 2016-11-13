@@ -1,27 +1,24 @@
 import flask
+from flask import request
 
+buttons = {str(num): False for num in range(9)}
 
-def initialize_buttons():
-    return {num: False for num in range(9)}
-
-buttons = initialize_buttons()
-
-# EB looks for an 'application' callable by default.
+# Amazon Elastic Beanstalk looks for an 'application' callable by default.
 application = flask.Flask(__name__)
 
 
 @application.route("/button/<number>/", methods=['GET', 'PUT'])
-def show_button():
-    pass
+def show_button(number):
+    if request.method == 'PUT':
+        buttons[number] = not buttons[number]
+
+    return flask.jsonify(buttons[number])
 
 
 @application.route("/buttons/", methods=['GET'])
 def show_buttons():
     return flask.jsonify(buttons)
 
-# run the app.
 if __name__ == "__main__":
-    # Setting debug to True enables debug output. This line should be
-    # removed before deploying a production app.
     application.debug = True
     application.run()

@@ -20,5 +20,5 @@ def show_buttons():
     return flask.jsonify(buttons)
 
 if __name__ == "__main__":
-    application.debug = True
+    application.debug = False
     application.run()

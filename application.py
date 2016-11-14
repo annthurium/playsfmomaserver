@@ -7,12 +7,13 @@ buttons = {('buttonId' + str(num)): False for num in range(4)}
 application = flask.Flask(__name__)
 
 
-@application.route("/button/<number>/", methods=['GET', 'PUT'])
-def show_button(number):
+@application.route("/button/<button_id>/", methods=['GET', 'PUT'])
+def show_button(button_id):
     if request.method == 'PUT':
-        buttons[number] = not buttons[number]
-
-    return flask.jsonify(buttons[number])
+        for key in buttons:
+            new_value = True if key == button_id else False
+            buttons[key] = new_value
+    return flask.jsonify(buttons[button_id])
 
 
 @application.route("/buttons/", methods=['GET'])
